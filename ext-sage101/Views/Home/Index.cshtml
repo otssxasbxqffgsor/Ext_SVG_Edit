@@ -1,0 +1,69 @@
+﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<select id="main_list">
+    <option value="default" selected>Select Your List</option>
+    <option value="mobile">mobile list</option>
+    <option value="laptop">laptop list</option>
+</select>
+<select id="brand" class="secondary"></select>
+<select id="version" class="secondary"></select>
+
+
+<script>
+$(function() {
+    var sel, i,
+        list = ['mobile', 'laptop'],
+        phone = ['Samsung', 'Nokia'],
+        laptop = ['HP', 'Dell'],
+        android = ['4.1', '4.2'],
+        windows = ['8', '8.1'],
+        dev_default = '<option value="default" selected>Select your Device brand</option>',
+        os_default  = '<option value="default" selected>Select your OS version</option>';
+
+    sel_brand = $('#brand');
+    sel_version = $('#version');
+
+    $('select').change(function() {
+        switch (this.id) {
+            case 'main_list':
+                $('.secondary').hide();
+                sel_brand.find('option').remove();
+                sel_brand.append(dev_default);
+                sel_brand.show();
+                if (this.value == 'mobile') {
+                    for (i = 0; i < phone.length; i++) {
+                        $("#brand").append(
+                            '<option value="' + phone[i] + '">' + phone[i] + '</option>'
+                        );
+                    }
+                }else if (this.value == 'laptop') {
+                    for (i = 0; i < phone.length; i++) {
+                        $("#brand").append(
+                            '<option value="' + laptop[i] + '">' + laptop[i] + '</option>'
+                        );
+                    }
+                }
+                break;
+            case 'brand':
+                sel_version.find('option').remove();
+                sel_version.append(os_default);
+                sel_version.show();
+                if (this.value == 'Samsung') {
+                    for (i = 0; i < android.length; i++) {
+                        $("#version").append(
+                            '<option value="' + android[i] + '">' + android[i] + '</option>'
+                        );
+                    }
+                }else if (this.value == 'Nokia' || this.value == 'HP' || this.value == 'Dell') {
+                    for (i = 0; i < windows.length; i++) {
+                        $("#version").append(
+                            '<option value="' + windows[i] + '">' + windows[i] + '</option>'
+                        );
+                    }
+                }
+                break;
+        }
+    });
+
+}); //END document.ready()
+    </script>
+<p id="VPF_Tag"><iframe id="VPFModule" src="~/Scripts/svg-edit/svg-editor.html" width="1000px" height="900"/></p>
