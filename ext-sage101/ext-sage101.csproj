@@ -538,7 +538,6 @@
     <Content Include="Views\MVC\Chapter1.cshtml" />
     <Content Include="Views\Home\Chapter1.cshtml" />
     <Content Include="Views\MVC\Index.cshtml" />
-    <Content Include="Views\MVC\dnuthole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
