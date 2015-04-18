@@ -179,6 +179,19 @@
                                     alert("Failed To Get Data From Db!");
                                 }
                             },
+
+                            "NameParse": function(name) {
+
+                                $.each(Repository.Model.Screen.AP, function(index, value) {
+
+                                    if (name = value) {
+                                        console.log(index);
+                                        return index;
+                                    }
+                                });
+
+                            },
+
                             "Screen": {
                                 "AP": function () {
                                     // return an array 
@@ -186,7 +199,7 @@
                                     var myArray = [Repository.Model.Screen.AP.length];
                                     var i = 0;
                                     $.each(Repository.Model.Screen.AP, function (index, value) {
-                                        debugger;
+                                       debugger;
                                         console.log(Repository.Model.Screen.AP);
                                         myArray[i] = { index: Repository.Method.Get(value) };
                                     });
@@ -195,28 +208,29 @@
                             },
                             "Get": function (ScreenName) {
                                 alert(ScreenName);
-                                var myArr = [];
+                                var myArr = {};
+                                var i = 0;
                                 $.each(Repository.Model.Ids.AP, function (index, value) {
                                     debugger;
-                                    //  alert(value);
-                                    var myArr = [];
-                                    var i = 0;
+                                  //  alert(value);
+
                                     console.log(value);
-                                    $.each(value, function (_index, _value) {
+                                    $.each(value, function(_index, _value) {
+                                        console.log(_index + _value);
+
+                                        var Value = _index;
+                                        alert(Value);
+                                        var n = Respository.Methods.NameParse(_index);
                                         var result = Repository.Http.Get(_value);
-                                        myArr[i] = { _value: JSON.parse(result.responseText) };
-                                        debugger;
+                                        myArr = +{ _index: JSON.parse(result.responseText) };
+                                        console.log(myArr);
+                                        i++;
 
                                     });
-
-
+                               
                                 });
-                                debugger;
-                                $.each(myArr, function (index, value) {
-
-                                    console.log(index + value);
-                                });
-                                return myArr;
+                                console.log(myArr);
+                              return myArr;
 
                             }
 
@@ -224,25 +238,24 @@
                         Repository.Http = {
                             "Get": function (id) {
                                 var _url = Repository.Model.GetUrl(id);
-                                //   alert(_url);
+                             //   alert(_url);
                                 debugger;
                                 try {
+                                  
+                                        var respond = $.ajax(
+                                            {
+                                                url: _url,
+                                                type: "GET",
+                                                dataType: 'json',
+                                                contentType: 'application/json',
+                                                async: false,
+                                                sucess: function (data) { alert("Success" + url + data);
+                                                    return (data);
+                                                },
+                                                error: function (error) { alert("FailedAtAjaxCall!" + error); }
+                                            });
 
-                                    var respond = $.ajax(
-                                        {
-                                            url: _url,
-                                            type: "GET",
-                                            dataType: 'json',
-                                            contentType: 'application/json',
-                                            async: false,
-                                            sucess: function (data) {
-                                                alert("Success" + url + data);
-                                                return (data);
-                                            },
-                                            error: function (error) { alert("FailedAtAjaxCall!" + error); }
-                                        });
-
-                                    console.log(respond);
+                                        console.log(respond.responseText);
                                     return (respond);
                                 } catch (e) {
                                     alert("Error Ajax Get To GetTemplate API");
