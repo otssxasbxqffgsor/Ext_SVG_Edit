@@ -195,18 +195,28 @@
                             },
                             "Get": function (ScreenName) {
                                 alert(ScreenName);
+                                var myArr = [];
                                 $.each(Repository.Model.Ids.AP, function (index, value) {
                                     debugger;
-                                    alert(value);
-                                    console.log(index);
+                                    //  alert(value);
+                                    var myArr = [];
+                                    var i = 0;
                                     console.log(value);
-                                    $.each(value, function(_index, _value) {
-                                        return (Repository.Http.Get(_value));
-                                           });
-                                   
-                                  
-                                });
+                                    $.each(value, function (_index, _value) {
+                                        var result = Repository.Http.Get(_value);
+                                        myArr[i] = { _value: JSON.parse(result.responseText) };
+                                        debugger;
 
+                                    });
+
+
+                                });
+                                debugger;
+                                $.each(myArr, function (index, value) {
+
+                                    console.log(index + value);
+                                });
+                                return myArr;
 
                             }
 
@@ -214,19 +224,26 @@
                         Repository.Http = {
                             "Get": function (id) {
                                 var _url = Repository.Model.GetUrl(id);
-                                alert(_url);
+                                //   alert(_url);
+                                debugger;
                                 try {
-                                    return (
-                                        JSON.parse($.ajax(
-                                            {
-                                                url: _url,
-                                                dataType: 'json',
-                                                contentType: 'application/json',
-                                                async: false,
-                                                sucess: function (data) { console.log("Success" + url + data); },
-                                                error: function (error) { alert("FailedAtAjaxCall!" + error); }
-                                            })));
 
+                                    var respond = $.ajax(
+                                        {
+                                            url: _url,
+                                            type: "GET",
+                                            dataType: 'json',
+                                            contentType: 'application/json',
+                                            async: false,
+                                            sucess: function (data) {
+                                                alert("Success" + url + data);
+                                                return (data);
+                                            },
+                                            error: function (error) { alert("FailedAtAjaxCall!" + error); }
+                                        });
+
+                                    console.log(respond);
+                                    return (respond);
                                 } catch (e) {
                                     alert("Error Ajax Get To GetTemplate API");
                                 }
@@ -382,8 +399,8 @@
                                 }
                                 return true;
                             },
-                            "GetUrl": function (Id) { return (window.location.protocol + "//" + window.location.host + "Tenant" + "/" + this.UrlModel.Area + "/" + this.UrlModel.Controller + "/" + this.UrlModel.Action + "/" + Id); }
-                            , "UrlModel": { "Area": "VPF", "Controller": "VPFCore", "Action": "GetTemplate" }
+                            "GetUrl": function (Id) { return (window.location.protocol + "//" + window.location.host + "/" + "Tenant" + "/" + this.UrlModel.Area + "/" + this.UrlModel.Controller + "/" + this.UrlModel.Action + "/" + Id); }
+                            , "UrlModel": { "Area": "VPF", "Controller": "VPFCores", "Action": "GetTemplate" }
                         };
                         //       Repository.Shapes = {
                         //         "AP_Analytical_Report": Repository.Methods.Screen.AP.Analytical_Report(),
